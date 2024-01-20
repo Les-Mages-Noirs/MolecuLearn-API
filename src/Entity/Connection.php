@@ -14,11 +14,9 @@ class Connection
     private ?int $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\Table(name: 'atom1')]
     private ?Atom $atom1 = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\Table(name: 'atom2')]
     private ?Atom $atom2 = null;
 
     #[ORM\Column]
