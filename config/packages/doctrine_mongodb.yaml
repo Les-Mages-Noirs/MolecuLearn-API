@@ -1,8 +1,0 @@
-doctrine_mongodb:
-    connections:
-        default:
-            server: 'mongodb://%env(resolve:DOC_DATABASE_HOST)%:%env(resolve:DOC_DATABASE_PORT)%'
-            options:
-                username: '%env(resolve:DOC_DATABASE_USER)%'
-                password: '%env(resolve:DOC_DATABASE_PASSWORD)%'
-    default_database: '%env(resolve:DOC_DATABASE_NAME)%'
