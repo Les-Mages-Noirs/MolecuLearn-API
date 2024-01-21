@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use App\Repository\MoleculeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +13,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MoleculeRepository::class)]
 #[ApiResource()]
+#[ApiResource(
+    uriTemplate: '/users/{user_id}/molecules',
+    shortName: 'UserMolecules',
+    operations: [new GetCollection()],
+    uriVariables: [
+        'user_id' => new Link(
+            fromClass: User::class,
+            toProperty: 'owner',
+        ),
+    ],
+)]
 class Molecule {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,6 +35,9 @@ class Molecule {
 
     #[ORM\OneToMany(mappedBy: 'molecule', targetEntity: Connection::class)]
     private Collection $connections;
+
+    #[ORM\ManyToOne(inversedBy: 'molecules')]
+    private ?User $owner = null;
 
     public function __construct() {
         $this->connections = new ArrayCollection();
@@ -64,6 +80,16 @@ class Molecule {
                 $connection->setMolecule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static {
+        $this->owner = $owner;
 
         return $this;
     }
