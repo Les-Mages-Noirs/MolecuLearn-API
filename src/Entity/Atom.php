@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AtomRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AtomRepository::class)]
-class Atom
-{
+#[ApiResource(
+    normalizationContext: ["groups" => ["atom:read"]],
+)]
+class Atom {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -40,114 +44,95 @@ class Atom
     #[ORM\Column(length: 255)]
     private ?string $discoverer = null;
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getAtomicNumber(): ?int
-    {
+    public function getAtomicNumber(): ?int {
         return $this->atomicNumber;
     }
 
-    public function setAtomicNumber(int $atomicNumber): static
-    {
+    public function setAtomicNumber(int $atomicNumber): static {
         $this->atomicNumber = $atomicNumber;
 
         return $this;
     }
 
-    public function getSymbol(): ?string
-    {
+    public function getSymbol(): ?string {
         return $this->symbol;
     }
 
-    public function setSymbol(string $symbol): static
-    {
+    public function setSymbol(string $symbol): static {
         $this->symbol = $symbol;
 
         return $this;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function setName(string $name): static
-    {
+    public function setName(string $name): static {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getFusionPoint(): ?float
-    {
+    public function getFusionPoint(): ?float {
         return $this->fusionPoint;
     }
 
-    public function setFusionPoint(float $fusionPoint): static
-    {
+    public function setFusionPoint(float $fusionPoint): static {
         $this->fusionPoint = $fusionPoint;
 
         return $this;
     }
 
-    public function getBoilingPoint(): ?float
-    {
+    public function getBoilingPoint(): ?float {
         return $this->boilingPoint;
     }
 
-    public function setBoilingPoint(float $boilingPoint): static
-    {
+    public function setBoilingPoint(float $boilingPoint): static {
         $this->boilingPoint = $boilingPoint;
 
         return $this;
     }
 
-    public function getAtomicMass(): ?float
-    {
+    public function getAtomicMass(): ?float {
         return $this->atomicMass;
     }
 
-    public function setAtomicMass(float $atomicMass): static
-    {
+    public function setAtomicMass(float $atomicMass): static {
         $this->atomicMass = $atomicMass;
 
         return $this;
     }
 
-    public function getVolumicMass(): ?float
-    {
+    public function getVolumicMass(): ?float {
         return $this->volumicMass;
     }
 
-    public function setVolumicMass(float $volumicMass): static
-    {
+    public function setVolumicMass(float $volumicMass): static {
         $this->volumicMass = $volumicMass;
 
         return $this;
     }
 
-    public function getDiscovery(): ?int
-    {
+    public function getDiscovery(): ?int {
         return $this->discovery;
     }
 
-    public function setDiscovery(int $discovery): static
-    {
+    public function setDiscovery(int $discovery): static {
         $this->discovery = $discovery;
 
         return $this;
     }
 
-    public function getDiscoverer(): ?string
-    {
+    public function getDiscoverer(): ?string {
         return $this->discoverer;
     }
 
-    public function setDiscoverer(string $discoverer): static
-    {
+    public function setDiscoverer(string $discoverer): static {
         $this->discoverer = $discoverer;
 
         return $this;

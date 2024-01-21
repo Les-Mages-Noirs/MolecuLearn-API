@@ -3,25 +3,24 @@
 namespace App\Repository;
 
 use App\Entity\Atom;
-use App\Entity\AtomInfo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Atom>
+ * @extends ServiceEntityRepository<AtomNode>
  *
- * @method Atom|null find($id, $lockMode = null, $lockVersion = null)
- * @method Atom|null findOneBy(array $criteria, array $orderBy = null)
- * @method Atom[]    findAll()
- * @method Atom[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AtomNode|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AtomNode|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AtomNode[]    findAll()
+ * @method AtomNode[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AtomRepository extends ServiceEntityRepository {
+class AtomNodeRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Atom::class);
     }
 
     //    /**
-    //     * @return Atom[] Returns an array of Atom objects
+    //     * @return AtomNode[] Returns an array of AtomNode objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -35,7 +34,7 @@ class AtomRepository extends ServiceEntityRepository {
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Atom
+    //    public function findOneBySomeField($value): ?AtomNode
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')
