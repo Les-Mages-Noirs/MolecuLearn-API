@@ -12,9 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[apiRessource] // This is the default configuration
-class User implements UserInterface, PasswordAuthenticatedUserInterface
-{
+#[ApiResource()]
+class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -38,35 +37,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Molecule::class)]
     private Collection $molecules;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->molecules = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
+    public function getEmail(): ?string {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
-    {
+    public function setEmail(string $email): static {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
+    public function getUsername(): ?string {
         return $this->username ?? $this->email;
     }
 
-    public function setUsername(string $username): static
-    {
+    public function setUsername(string $username): static {
         $this->username = $username;
 
         return $this;
@@ -77,16 +70,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getUserIdentifier(): string
-    {
+    public function getUserIdentifier(): string {
         return (string) $this->email;
     }
 
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
-    {
+    public function getRoles(): array {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
@@ -94,8 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
-    {
+    public function setRoles(array $roles): static {
         $this->roles = $roles;
 
         return $this;
@@ -104,13 +94,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
-    {
+    public function getPassword(): string {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
-    {
+    public function setPassword(string $password): static {
         $this->password = $password;
 
         return $this;
@@ -119,8 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials(): void
-    {
+    public function eraseCredentials(): void {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
@@ -128,13 +115,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Molecule>
      */
-    public function getMolecules(): Collection
-    {
+    public function getMolecules(): Collection {
         return $this->molecules;
     }
 
-    public function addMolecule(Molecule $molecule): static
-    {
+    public function addMolecule(Molecule $molecule): static {
         if (!$this->molecules->contains($molecule)) {
             $this->molecules->add($molecule);
             $molecule->setOwner($this);
@@ -143,8 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeMolecule(Molecule $molecule): static
-    {
+    public function removeMolecule(Molecule $molecule): static {
         if ($this->molecules->removeElement($molecule)) {
             // set the owning side to null (unless already changed)
             if ($molecule->getOwner() === $this) {
