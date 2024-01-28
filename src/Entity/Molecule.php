@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Link;
 use App\Repository\MoleculeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -39,6 +40,9 @@ class Molecule {
 
     #[ORM\ManyToOne(inversedBy: 'molecules')]
     private ?User $owner = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct() {
         $this->connections = new ArrayCollection();
@@ -91,6 +95,18 @@ class Molecule {
 
     public function setOwner(?User $owner): static {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
