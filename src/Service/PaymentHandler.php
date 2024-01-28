@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Service;
-use App\Repository\UtilisateurRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-use App\Entity\Utilisateur;
+use App\Entity\User;
 
 class PaymentHandler implements PaymentHandlerInterface
 {
@@ -22,22 +22,21 @@ class PaymentHandler implements PaymentHandlerInterface
         #[Autowire('%PREMIUM_PRICE%')] private string $premiumPrice,
         #[Autowire('%SIGNATURE_SECRET%')] private string $secretSignature,
         private RouterInterface $router,
-        private UtilisateurRepository $utilisateurRepository,
+        private UserRepository $userRepository,
         private EntityManagerInterface $entityManager
-
     ){}
 
-    //Génère et renvoie un lien vers Stripe afin de finaliser l'achat du statut Premium pour l'utilisateur passé en paramètre.
-    public function getPremiumCheckoutUrlFor(Utilisateur $utilisateur)  : string
+    //Génère et renvoie un lien vers Stripe afin de finaliser l'achat du statut Premium pour l'user passé en paramètre.
+    public function getPremiumCheckoutUrlFor(User $user)  : string
     {
 
         $paymentData = [
             'mode' => 'payment',
-            'payment_intent_data' => ['capture_method' => 'manual', 'receipt_email' => $utilisateur->getAdresseEmail()],
-            'customer_email' => $utilisateur->getAdresseEmail(),
+            'payment_intent_data' => ['capture_method' => 'manual', 'receipt_email' => $user->getEmail()],
+            'customer_email' => $user->getEmail(),
             'success_url' => $this->router->generate('premiumCheckoutConfirm', [],UrlGeneratorInterface::ABSOLUTE_URL) . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $this->router->generate('premiumInfos',[], UrlGeneratorInterface::ABSOLUTE_URL),
-            "metadata" => ["user_id" => $utilisateur->getId()],
+            "metadata" => ["user_id" => $user->getId()],
             "line_items" => [
                 [
                     "price_data" => [
@@ -50,10 +49,8 @@ class PaymentHandler implements PaymentHandlerInterface
                 ]
             ]
         ];
-        //Stripe::setApiKey($this->apiKey);
         $stripe = new StripeClient($this->apiKey);
         $stripeSession = $stripe->checkout->sessions->create($paymentData);
-        //$stripeSession = Session::create($paymentData);
         $url = $stripeSession->url;
         return $url;
 
@@ -65,7 +62,7 @@ class PaymentHandler implements PaymentHandlerInterface
             throw new \Exception("dataExemple manquant...");
         }
         $id = $metadata["user_id"];
-        $utilisateur = $this->utilisateurRepository->find($id);
+        $user = $this->userRepository->find($id);
 
         $paymentIntent = $session["payment_intent"];
         $stripe = new StripeClient($this->apiKey);
@@ -76,8 +73,8 @@ class PaymentHandler implements PaymentHandlerInterface
         }
 
 
-        $utilisateur->setPremium(true);
-        $this->entityManager->persist($utilisateur);
+        $user->setPremium(true);
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 

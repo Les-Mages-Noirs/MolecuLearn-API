@@ -48,7 +48,7 @@ class WebhookController extends AbstractController
             }
             else {
                 //Si on arrive là, c'est qu'on ne gère pas l'événement déclenché, on renvoi alors un code d'erreur à Stripe.
-                return new Response('Onne gère pas l evenement déclenché', 402);
+                return new Response('On ne gère pas l evenement déclenché', 402);
             }
         } catch(\Exception $e) {
             /*
