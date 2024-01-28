@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
     ],
 )]
+#[ApiResource]
 class Molecule {
     #[ORM\Id]
     #[ORM\GeneratedValue]
