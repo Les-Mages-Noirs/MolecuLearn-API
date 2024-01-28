@@ -8,9 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AtomRepository::class)]
-#[ApiResource(
-    normalizationContext: ["groups" => ["atom:read"]],
-)]
+// #[ApiResource(
+//     normalizationContext: ["groups" => ["atom:read"]],
+// )]
+#[ApiResource]
 class Atom {
     #[ORM\Id]
     #[ORM\GeneratedValue]
