@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MoleculeRepository::class)]
-#[ApiResource()]
+
 #[ApiResource(
     uriTemplate: '/users/{user_id}/molecules',
     shortName: 'UserMolecules',
