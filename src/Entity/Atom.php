@@ -3,15 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\AtomRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AtomRepository::class)]
-// #[ApiResource(
-//     normalizationContext: ["groups" => ["atom:read"]],
-// )]
-#[ApiResource]
+
+#[ApiResource(
+    operations: [
+        new GetCollection(paginationEnabled: false),
+    ],
+
+)]
 class Atom {
     #[ORM\Id]
     #[ORM\GeneratedValue]

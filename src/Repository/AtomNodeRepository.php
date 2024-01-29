@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Atom;
+use App\Entity\AtomNode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AtomNodeRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
-        parent::__construct($registry, Atom::class);
+        parent::__construct($registry, AtomNode::class);
     }
 
     //    /**

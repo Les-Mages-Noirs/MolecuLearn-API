@@ -3,11 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\AtomRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Repository\AtomNodeRepository;
 
-#[ORM\Entity(repositoryClass: AtomRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Post(),
+    ],
+)]
+#[ORM\Entity(repositoryClass: AtomNodeRepository::class)]
 class AtomNode {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,6 +24,7 @@ class AtomNode {
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Atom $atom = null;
+
 
     public function getId(): ?int {
         return $this->id;

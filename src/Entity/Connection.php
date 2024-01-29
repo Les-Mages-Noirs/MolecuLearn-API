@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ConnectionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConnectionRepository::class)]
+#[ApiResource]
 class Connection {
     #[ORM\Id]
     #[ORM\GeneratedValue]
