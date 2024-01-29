@@ -68,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    #[ORM\Column]
+    private ?bool $premium = false;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -146,5 +149,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
      */
     public function eraseCredentials(): void {
         $this->plainPassword = null;
+    }
+
+    public function isPremium(): ?bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(bool $premium): static
+    {
+        $this->premium = $premium;
+
+        return $this;
     }
 }
