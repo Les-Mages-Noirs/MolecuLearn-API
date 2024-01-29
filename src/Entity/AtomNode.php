@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Repository\AtomNodeRepository;
 
@@ -12,6 +13,7 @@ use App\Repository\AtomNodeRepository;
     operations: [
         new GetCollection(),
         new Post(),
+        new Get()
     ],
 )]
 #[ORM\Entity(repositoryClass: AtomNodeRepository::class)]

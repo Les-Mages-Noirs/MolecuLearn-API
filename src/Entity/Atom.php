@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
 use App\Repository\AtomRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     operations: [
         new GetCollection(paginationEnabled: false),
+        new Get(),
     ],
 
 )]
