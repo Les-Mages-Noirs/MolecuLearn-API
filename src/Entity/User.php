@@ -69,7 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private array $roles = [];
 
     #[ORM\Column]
-    private ?bool $premium = null;
+    private ?bool $premium = false;
 
     public function getId(): ?int {
         return $this->id;

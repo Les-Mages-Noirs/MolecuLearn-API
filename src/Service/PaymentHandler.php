@@ -42,7 +42,7 @@ class PaymentHandler implements PaymentHandlerInterface
                     "price_data" => [
                         "currency" => "eur",
                         "product_data" => ["name" => "MolecuLearn Premium"],
-                        "unit_amount" => $this->premiumPrice
+                        "unit_amount" => $this->premiumPrice * 100
                     ],
                     "quantity" => 1
 
