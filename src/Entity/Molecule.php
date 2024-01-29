@@ -36,7 +36,7 @@ class Molecule {
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'molecule', targetEntity: Connection::class)]
+    #[ORM\OneToMany(mappedBy: 'molecule', targetEntity: Connection::class, cascade: ["remove"])]
     private Collection $connections;
 
     #[ORM\ManyToOne(inversedBy: 'molecules')]
